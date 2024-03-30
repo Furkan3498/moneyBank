@@ -2,10 +2,13 @@ package com.moneyBank.moneyBank.controller;
 
 import com.moneyBank.moneyBank.RequestDtos.CreateCustomerRequest;
 import com.moneyBank.moneyBank.dto.CustomerDto;
+import com.moneyBank.moneyBank.model.Customer;
 import com.moneyBank.moneyBank.service.CustomerService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @RestController
 @RequestMapping("/v1/customer")
@@ -27,5 +30,10 @@ public class CustomerController {
 
 
         return ResponseEntity.ok(customerService.createCustomer(createCustomerRequest));
+    }
+
+    @GetMapping
+    public ResponseEntity<List<CustomerDto>> getAllCustomers(){
+       return ResponseEntity.ok(customerService.getAllCustomers());
     }
 }

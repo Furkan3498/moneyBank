@@ -2,21 +2,26 @@ package com.moneyBank.moneyBank.service;
 
 
 import com.moneyBank.moneyBank.RequestDtos.CreateCustomerRequest;
-import com.moneyBank.moneyBank.dto.CityDto;
 import com.moneyBank.moneyBank.dto.CustomerDto;
+import com.moneyBank.moneyBank.dto.CustomerDtoConverter;
 import com.moneyBank.moneyBank.model.City;
 import com.moneyBank.moneyBank.model.Customer;
 import com.moneyBank.moneyBank.repository.CustomerRepository;
 import org.springframework.stereotype.Service;
+
+import java.util.ArrayList;
+import java.util.List;
 
 @Service
 public class CustomerService {
 
 
     private final CustomerRepository customerRepository;
+    private final CustomerDtoConverter customerDtoConverter;
 
-    public CustomerService(CustomerRepository customerRepository) {
+    public CustomerService(CustomerRepository customerRepository, CustomerDtoConverter customerDtoConverter) {
         this.customerRepository = customerRepository;
+        this.customerDtoConverter = customerDtoConverter;
     }
 
     public CustomerDto createCustomer(CreateCustomerRequest createCustomerRequest){
@@ -36,12 +41,24 @@ public class CustomerService {
         //Ama şu an ıd değerini biz verdiğimiz için geri döndürüken de girdiğimiz şeyleri alaacğız.
         customerRepository.save(customer);
 
-        CustomerDto customerDto = new CustomerDto();
-        customerDto.setAddress(customer.getAddress());
-        customerDto.setId(customer.getId());
-        customerDto.setName(customer.getName());
-        customerDto.setDateOfBirth(customer.getDateOfBirth());
-        customerDto.setCity(CityDto.valueOf(customer.getCity().name()));
-        return customerDto;
+        //Static ile tanımlarsak böyle yapabiliriz
+        //return CustomerDtoConverter.convert(customer);
+
+        return customerDtoConverter.convert(customer);
+    }
+
+    public List<CustomerDto> getAllCustomers() {
+        List<Customer> customerList = customerRepository.findAll();
+        List<CustomerDto> customerDtoList = new ArrayList<>();
+        for (Customer customer: customerList){
+
+            //böyle yapsaydık 2 tane instance yaratıcaktık ve memoryde daha fazla yer tutacaktı.
+            //o yüzden diğer türlü yaparsak maliyet azalır
+            //CustomerDto customerDto = customerDtoConverter.convert(customer);
+            //customerDtoList.add(customerDto);
+
+            customerDtoList.add(customerDtoConverter.convert(customer));
+    }
+        return  customerDtoList;
     }
 }
