@@ -1,0 +1,5 @@
+package com.moneyBank.moneyBank.model;
+
+public enum City {
+    ISTANBUL, ANKARA, MANISA, ANTALYA, MUGLA, RIZE, MARAS, SELANIK, TEKIRDAG,EDIRNE,SINOP, IGDIR, KAYSERI,KOCAELI,CANAKKALE
+}
