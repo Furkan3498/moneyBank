@@ -20,10 +20,7 @@ public class CustomerController {
         this.customerService = customerService;
     }
 
-    @GetMapping
-    public ResponseEntity<String> bismillah(){
-        return ResponseEntity.ok("Bismillâhirrahmânirrahîm");
-    }
+
 
     @PostMapping
     public ResponseEntity<CustomerDto> createCustomer(@RequestBody CreateCustomerRequest createCustomerRequest){
