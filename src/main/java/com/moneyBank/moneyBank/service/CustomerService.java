@@ -89,10 +89,12 @@ public class CustomerService {
         Optional<Customer> customerOptional = customerRepository.findById(id);
 
         customerOptional.ifPresent(customer -> {
+            customer.setId(customerOptional.get().getId());
             customer.setName(customerRequest.getName());
             customer.setCity(City.valueOf(customerRequest.getCity().name()));
             customer.setAddress(customerRequest.getAddress());
             customer.setDateOfBirth(customerRequest.getDateOfBirth());
+            customerRepository.save(customer);
         });
         return customerOptional.map(customer -> customerDtoConverter.convert(customer)).orElse(new CustomerDto());
 
