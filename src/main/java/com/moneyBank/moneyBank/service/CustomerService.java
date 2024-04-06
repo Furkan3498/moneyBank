@@ -64,7 +64,7 @@ public class CustomerService {
         return customerDtoList;
     }
 
-    public CustomerDto getCustomerById(String id) {
+    public CustomerDto getDtoCustomerById(String id) {
 
         Optional<Customer> customerOptional = customerRepository.findById(id);
         //Bu kullanım da vardır ama sakıncalıdır
@@ -107,6 +107,10 @@ public class CustomerService {
         //}
 
         //return customerDtoConverter.convert(customer);
+    }
+
+    protected Customer getCustomerById(String id){
+        return customerRepository.findById(id).orElse(new Customer());
     }
 }
 
