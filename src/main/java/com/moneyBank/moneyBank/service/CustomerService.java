@@ -1,8 +1,8 @@
 package com.moneyBank.moneyBank.service;
 
 
-import com.moneyBank.moneyBank.RequestDtos.CreateCustomerRequest;
-import com.moneyBank.moneyBank.RequestDtos.UpdateCustomerRequest;
+import com.moneyBank.moneyBank.requestDtos.CreateCustomerRequest;
+import com.moneyBank.moneyBank.requestDtos.UpdateCustomerRequest;
 import com.moneyBank.moneyBank.dto.CustomerDto;
 import com.moneyBank.moneyBank.dto.CustomerDtoConverter;
 import com.moneyBank.moneyBank.model.City;

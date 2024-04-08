@@ -1,18 +1,14 @@
 package com.moneyBank.moneyBank.service;
 
-import com.moneyBank.moneyBank.RequestDtos.CreateAccountRequest;
-import com.moneyBank.moneyBank.RequestDtos.UpdateAccountRequest;
+import com.moneyBank.moneyBank.requestDtos.CreateAccountRequest;
+import com.moneyBank.moneyBank.requestDtos.UpdateAccountRequest;
 import com.moneyBank.moneyBank.dto.AccountDto;
 import com.moneyBank.moneyBank.dto.AccountDtoConverter;
 import com.moneyBank.moneyBank.model.Account;
 import com.moneyBank.moneyBank.model.Customer;
 import com.moneyBank.moneyBank.repository.AccountRepository;
-import lombok.extern.slf4j.Slf4j;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -35,8 +31,8 @@ public class AccountService {
 
     public AccountDto createAccount(CreateAccountRequest createAccountRequest){
         Customer customer = customerService.getCustomerById(createAccountRequest.getCustomerId());
-        if (customer.getId().equals("")  || customer.getId() == null){
-            return  AccountDto.builder().build();
+        if (customer.getId() == null || customer.getId().trim().equals("")  ){
+            throw new RuntimeException("Customer Not Found");
         }
         Account account = Account.builder()
                 .id(createAccountRequest.getId())

@@ -1,7 +1,7 @@
 package com.moneyBank.moneyBank.controller;
 
-import com.moneyBank.moneyBank.RequestDtos.CreateCustomerRequest;
-import com.moneyBank.moneyBank.RequestDtos.UpdateCustomerRequest;
+import com.moneyBank.moneyBank.requestDtos.CreateCustomerRequest;
+import com.moneyBank.moneyBank.requestDtos.UpdateCustomerRequest;
 import com.moneyBank.moneyBank.dto.CustomerDto;
 import com.moneyBank.moneyBank.service.CustomerService;
 import org.springframework.http.ResponseEntity;

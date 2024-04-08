@@ -1,4 +1,4 @@
-package com.moneyBank.moneyBank.RequestDtos;
+package com.moneyBank.moneyBank.requestDtos;
 
 public class UpdateAccountRequest extends BaseAccountRequest{
 }

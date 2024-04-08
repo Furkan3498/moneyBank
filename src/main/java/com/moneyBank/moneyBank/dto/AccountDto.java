@@ -2,8 +2,11 @@ package com.moneyBank.moneyBank.dto;
 
 import com.moneyBank.moneyBank.model.Currency;
 import lombok.Builder;
+import lombok.EqualsAndHashCode;
+import lombok.ToString;
 
 @Builder
+@EqualsAndHashCode
 public class AccountDto {
 
 
@@ -54,5 +57,15 @@ public class AccountDto {
 
     public void setCurrency(Currency currency) {
         this.currency = currency;
+    }
+
+    @Override
+    public String toString() {
+        return "AccountDto{" +
+                "id='" + id + '\'' +
+                ", customerId='" + customerId + '\'' +
+                ", balance=" + balance +
+                ", currency=" + currency +
+                '}';
     }
 }

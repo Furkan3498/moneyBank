@@ -1,4 +1,4 @@
-package com.moneyBank.moneyBank.RequestDtos;
+package com.moneyBank.moneyBank.requestDtos;
 
 import com.moneyBank.moneyBank.model.City;
 import com.moneyBank.moneyBank.model.Currency;

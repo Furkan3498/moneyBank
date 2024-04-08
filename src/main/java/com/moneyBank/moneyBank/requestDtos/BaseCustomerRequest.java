@@ -1,4 +1,4 @@
-package com.moneyBank.moneyBank.RequestDtos;
+package com.moneyBank.moneyBank.requestDtos;
 
 import com.moneyBank.moneyBank.dto.CityDto;
 import lombok.AllArgsConstructor;

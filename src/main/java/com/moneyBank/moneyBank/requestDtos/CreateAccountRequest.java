@@ -1,4 +1,4 @@
-package com.moneyBank.moneyBank.RequestDtos;
+package com.moneyBank.moneyBank.requestDtos;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;

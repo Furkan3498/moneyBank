@@ -1,10 +1,4 @@
-package com.moneyBank.moneyBank.RequestDtos;
-
-import com.moneyBank.moneyBank.dto.CityDto;
-import lombok.Getter;
-import lombok.Setter;
-
-
+package com.moneyBank.moneyBank.requestDtos;
 
 
 public class CreateCustomerRequest extends BaseCustomerRequest  {
