@@ -1,10 +1,6 @@
 package com.moneyBank.moneyBank.service;
 
-<<<<<<< HEAD
-import com.moneyBank.moneyBank.requestDtos.CreateAccountRequest;
-=======
-import com.moneyBank.moneyBank.RequestDtos.CreateAccountRequest;
->>>>>>> origin/master
+
 import com.moneyBank.moneyBank.dto.AccountDto;
 import com.moneyBank.moneyBank.dto.AccountDtoConverter;
 import com.moneyBank.moneyBank.model.Account;
@@ -12,20 +8,14 @@ import com.moneyBank.moneyBank.model.City;
 import com.moneyBank.moneyBank.model.Currency;
 import com.moneyBank.moneyBank.model.Customer;
 import com.moneyBank.moneyBank.repository.AccountRepository;
-<<<<<<< HEAD
-=======
-import com.moneyBank.moneyBank.repository.CustomerRepository;
->>>>>>> origin/master
+
+import com.moneyBank.moneyBank.requestDtos.CreateAccountRequest;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 import org.mockito.Mockito;
 
-<<<<<<< HEAD
-=======
-import static org.junit.Assert.*;
 
->>>>>>> origin/master
 public class AccountServiceTest {
 
 
