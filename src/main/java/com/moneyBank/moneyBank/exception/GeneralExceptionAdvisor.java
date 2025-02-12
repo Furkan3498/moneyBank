@@ -17,7 +17,8 @@ import java.util.Map;
 
 @RestControllerAdvice
 public class GeneralExceptionAdvisor extends ResponseEntityExceptionHandler {
-    @Override
+
+
     protected ResponseEntity<Object> handleMethodArgumentNotValid(MethodArgumentNotValidException ex, HttpHeaders headers, HttpStatus status, WebRequest request) {
         Map<String, String> errors = new HashMap<>();
         ex.getBindingResult().getAllErrors().forEach(error ->{
@@ -28,8 +29,6 @@ public class GeneralExceptionAdvisor extends ResponseEntityExceptionHandler {
 
         return new ResponseEntity<>(errors, HttpStatus.BAD_REQUEST);
     }
-
-    //Advisor Design Patter
 
     @ExceptionHandler(CustomerNotFoundException.class)
     public ResponseEntity<?> customerNotFoundExceptionHandler(CustomerNotFoundException exception)  {
