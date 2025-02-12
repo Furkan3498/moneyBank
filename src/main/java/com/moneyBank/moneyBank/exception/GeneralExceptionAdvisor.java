@@ -15,11 +15,11 @@ import java.util.HashMap;
 import java.util.Map;
 
 
-@RestControllerAdvice
+//@RestControllerAdvice
 public class GeneralExceptionAdvisor extends ResponseEntityExceptionHandler {
 
-
-    protected ResponseEntity<Object> handleMethodArgumentNotValid(MethodArgumentNotValidException ex, HttpHeaders headers, HttpStatus status, WebRequest request) {
+    @ExceptionHandler(MethodArgumentNotValidException.class)
+    protected ResponseEntity<Object> handleMethodArgumentNotValid(MethodArgumentNotValidException ex) {
         Map<String, String> errors = new HashMap<>();
         ex.getBindingResult().getAllErrors().forEach(error ->{
             String fieldName = ((FieldError) error).getField();
