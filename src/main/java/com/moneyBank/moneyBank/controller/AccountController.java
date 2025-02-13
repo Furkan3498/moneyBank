@@ -4,6 +4,7 @@ import com.moneyBank.moneyBank.requestDtos.CreateAccountRequest;
 import com.moneyBank.moneyBank.requestDtos.UpdateAccountRequest;
 import com.moneyBank.moneyBank.dto.AccountDto;
 import com.moneyBank.moneyBank.service.AccountService;
+import jakarta.validation.Valid;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -29,7 +30,7 @@ public class AccountController {
         return ResponseEntity.ok(accountService.getAccountById(id));
     }
     @PostMapping
-    public ResponseEntity<AccountDto> createAccount(@RequestBody CreateAccountRequest createAccountRequest){
+    public ResponseEntity<AccountDto> createAccount(@Valid  @RequestBody CreateAccountRequest createAccountRequest){
         return ResponseEntity.ok(accountService.createAccount(createAccountRequest));
     }
     @PutMapping
