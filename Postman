@@ -1,2 +1,4 @@
 ilk olarak Postmande
 http://localhost:8080/v1/customer isteği at
+rabbitmq dashbord http://localhost:15672/#/
+docker stop
