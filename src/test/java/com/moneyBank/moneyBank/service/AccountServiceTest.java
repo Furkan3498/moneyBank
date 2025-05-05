@@ -14,6 +14,8 @@ import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 import org.mockito.Mockito;
+import org.springframework.amqp.core.AmqpTemplate;
+import org.springframework.amqp.core.DirectExchange;
 
 
 public class AccountServiceTest {
@@ -25,6 +27,10 @@ public class AccountServiceTest {
     private AccountRepository accountRepository;
     private AccountDtoConverter accountDtoConverter;
 
+    private DirectExchange exchange;
+    private AmqpTemplate amqpTemplate;
+
+
     @Before
     public void setUp() throws Exception {
         //yalancı classlar oluşturuyoruz. Bunlar class değil bizim istedğimiz şeyleri alalım diye
@@ -33,7 +39,7 @@ public class AccountServiceTest {
         customerService = Mockito.mock(CustomerService.class);
         accountDtoConverter = Mockito.mock(AccountDtoConverter.class);
 
-        accountService = new AccountService(accountRepository, customerService, accountDtoConverter);
+        accountService = new AccountService(accountRepository, customerService, accountDtoConverter,exchange,amqpTemplate);
     }
 
     //test metotları public ve void değer olmalı

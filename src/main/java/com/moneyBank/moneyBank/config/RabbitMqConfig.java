@@ -53,6 +53,19 @@ public class RabbitMqConfig {
 
     }
     @Bean
+    Binding secondStepQueueBinding (Queue secondStepQueue, DirectExchange exchange){
+        return BindingBuilder.bind(secondStepQueue).to(exchange).with("secondStepQueue");
+        //this our quequ first binding to exchane with key
+
+    }
+    @Bean
+    Binding thirdStepQueueBinding (Queue thirdStepQueue, DirectExchange exchange){
+        return BindingBuilder.bind(thirdStepQueue).to(exchange).with("thirdStepQueue");
+        //this our quequ first binding to exchane with key
+
+    }
+
+    @Bean
     public MessageConverter jsonMessageConverter(){
         return new Jackson2JsonMessageConverter();
         //message sendin JSON type we must tu convert object

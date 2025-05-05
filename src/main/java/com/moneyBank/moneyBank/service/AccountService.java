@@ -8,6 +8,9 @@ import com.moneyBank.moneyBank.dto.AccountDtoConverter;
 import com.moneyBank.moneyBank.model.Account;
 import com.moneyBank.moneyBank.model.Customer;
 import com.moneyBank.moneyBank.repository.AccountRepository;
+import org.springframework.amqp.core.AmqpTemplate;
+import org.springframework.amqp.core.DirectExchange;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -21,14 +24,25 @@ public class AccountService {
     private final CustomerService customerService;
     private final AccountDtoConverter accountDtoConverter;
 
-
+    private final DirectExchange exchange;
+    private final AmqpTemplate amqpTemplate;
    // private static final Logger logger = LoggerFactory.getLogger(AccountService.class);
 
-    public AccountService(AccountRepository accountRepository, CustomerService customerService, AccountDtoConverter accountDtoConverter) {
+    @Value("${sample.rabbitmq.routingKey}")
+    String routingKey;
+
+    @Value("${sample.rabbitmq.queue}")
+    String queueName;
+
+    public AccountService(AccountRepository accountRepository, CustomerService customerService, AccountDtoConverter accountDtoConverter, DirectExchange exchange, AmqpTemplate amqpTemplate) {
         this.accountRepository = accountRepository;
         this.customerService = customerService;
         this.accountDtoConverter = accountDtoConverter;
+        this.exchange = exchange;
+        this.amqpTemplate = amqpTemplate;
     }
+
+
 
     public AccountDto createAccount(CreateAccountRequest createAccountRequest){
         Customer customer = customerService.getCustomerById(createAccountRequest.getCustomerId());
@@ -76,6 +90,7 @@ public class AccountService {
         return accountList.stream().map(accountDtoConverter::convert).collect(Collectors.toList());
     }
 
+
     public AccountDto getAccountById(String id){
         return accountRepository.findById(id).map(accountDtoConverter::convert).orElse(new AccountDto());
     }
@@ -106,6 +121,8 @@ public class AccountService {
         });
         return accountOptional.map(accountDtoConverter :: convert).orElse(new AccountDto());
     }
+
+
 }
 
 
