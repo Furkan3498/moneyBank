@@ -28,7 +28,7 @@ public class AccountServiceTest {
     private AccountDtoConverter accountDtoConverter;
 
     private DirectExchange exchange;
-    private AmqpTemplate amqpTemplate;
+    private AmqpTemplate rabbitTemplate;
 
 
     @Before
@@ -39,7 +39,7 @@ public class AccountServiceTest {
         customerService = Mockito.mock(CustomerService.class);
         accountDtoConverter = Mockito.mock(AccountDtoConverter.class);
 
-        accountService = new AccountService(accountRepository, customerService, accountDtoConverter,exchange,amqpTemplate);
+        accountService = new AccountService(accountRepository, customerService, accountDtoConverter,exchange,rabbitTemplate);
     }
 
     //test metotları public ve void değer olmalı

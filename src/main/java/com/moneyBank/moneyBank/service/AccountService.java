@@ -2,6 +2,7 @@ package com.moneyBank.moneyBank.service;
 
 import com.moneyBank.moneyBank.exception.CustomerNotFoundException;
 import com.moneyBank.moneyBank.requestDtos.CreateAccountRequest;
+import com.moneyBank.moneyBank.requestDtos.MoneyTransferRequest;
 import com.moneyBank.moneyBank.requestDtos.UpdateAccountRequest;
 import com.moneyBank.moneyBank.dto.AccountDto;
 import com.moneyBank.moneyBank.dto.AccountDtoConverter;
@@ -25,7 +26,7 @@ public class AccountService {
     private final AccountDtoConverter accountDtoConverter;
 
     private final DirectExchange exchange;
-    private final AmqpTemplate amqpTemplate;
+    private final AmqpTemplate rabbitTemplate;
    // private static final Logger logger = LoggerFactory.getLogger(AccountService.class);
 
     @Value("${sample.rabbitmq.routingKey}")
@@ -34,12 +35,12 @@ public class AccountService {
     @Value("${sample.rabbitmq.queue}")
     String queueName;
 
-    public AccountService(AccountRepository accountRepository, CustomerService customerService, AccountDtoConverter accountDtoConverter, DirectExchange exchange, AmqpTemplate amqpTemplate) {
+    public AccountService(AccountRepository accountRepository, CustomerService customerService, AccountDtoConverter accountDtoConverter, DirectExchange exchange, AmqpTemplate rabbitTemplate) {
         this.accountRepository = accountRepository;
         this.customerService = customerService;
         this.accountDtoConverter = accountDtoConverter;
         this.exchange = exchange;
-        this.amqpTemplate = amqpTemplate;
+        this.rabbitTemplate = rabbitTemplate;
     }
 
 
@@ -122,7 +123,9 @@ public class AccountService {
         return accountOptional.map(accountDtoConverter :: convert).orElse(new AccountDto());
     }
 
-
+        public void  transferMoney(MoneyTransferRequest moneyTransferRequest){
+        rabbitTemplate.convertAndSend(exchange.getName(), routingKey, moneyTransferRequest);
+        }
 }
 
 
