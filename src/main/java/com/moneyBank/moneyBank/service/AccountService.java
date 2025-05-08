@@ -126,6 +126,20 @@ public class AccountService {
         public void  transferMoney(MoneyTransferRequest moneyTransferRequest){
         rabbitTemplate.convertAndSend(exchange.getName(), routingKey, moneyTransferRequest);
         }
+
+    public void transferMoneyMessage(MoneyTransferRequest moneyTransferRequest) {
+        Optional<Account> accountOptional = accountRepository.findById(moneyTransferRequest.getFromId());
+        accountOptional.ifPresentOrElse(account -> {
+                    if (account.getBalance() > moneyTransferRequest.getAmount()) {
+                        account.setBalance(account.getBalance() - moneyTransferRequest.getAmount());
+                        accountRepository.save(account);
+                        rabbitTemplate.convertAndSend(exchange.getName(), "secondRoute", moneyTransferRequest);
+                    } else {
+                        System.out.println("Insufficient funds -> accountId: " + moneyTransferRequest.getFromId() + " balance: " + account.getBalance() + " amount: " + moneyTransferRequest.getAmount());
+                    }},
+                () -> System.out.println("Account not found")
+        );
+    }
 }
 
 
