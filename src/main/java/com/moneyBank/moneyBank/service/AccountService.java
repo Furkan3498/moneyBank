@@ -11,6 +11,7 @@ import com.moneyBank.moneyBank.model.Customer;
 import com.moneyBank.moneyBank.repository.AccountRepository;
 import org.springframework.amqp.core.AmqpTemplate;
 import org.springframework.amqp.core.DirectExchange;
+import org.springframework.amqp.rabbit.annotation.RabbitListener;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
@@ -127,6 +128,7 @@ public class AccountService {
         rabbitTemplate.convertAndSend(exchange.getName(), routingKey, moneyTransferRequest);
         }
 
+        @RabbitListener(queues = "${sample.rabbitmq.queue}")
     public void transferMoneyMessage(MoneyTransferRequest moneyTransferRequest) {
         Optional<Account> accountOptional = accountRepository.findById(moneyTransferRequest.getFromId());
         accountOptional.ifPresentOrElse(account -> {
