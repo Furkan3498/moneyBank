@@ -142,6 +142,26 @@ public class AccountService {
                 () -> System.out.println("Account not found")
         );
     }
+
+    public void updateReceiverAccount(MoneyTransferRequest transferRequest) {
+        Optional<Account> accountOptional = accountRepository.findById(transferRequest.getToId());
+        accountOptional.ifPresentOrElse(account -> {
+                    account.setBalance(account.getBalance() + transferRequest.getAmount());
+                    accountRepository.save(account);
+                    rabbitTemplate.convertAndSend(exchange.getName(), "thirdRoute", transferRequest);
+                },
+                () -> {
+                    System.out.println("Receiver Account not found");
+                    Optional<Account> senderAccount = accountRepository.findById(transferRequest.getFromId());
+                    senderAccount.ifPresent(sender -> {
+                        System.out.println("Money charge back to sender");
+                        sender.setBalance(sender.getBalance() + transferRequest.getAmount());
+                        accountRepository.save(sender);
+                    });
+
+                }
+        );
+    }
 }
 
 
