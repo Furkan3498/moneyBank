@@ -142,7 +142,7 @@ public class AccountService {
                 () -> System.out.println("Account not found")
         );
     }
-
+    @RabbitListener(queues = "secondStepQueue")
     public void updateReceiverAccount(MoneyTransferRequest transferRequest) {
         Optional<Account> accountOptional = accountRepository.findById(transferRequest.getToId());
         accountOptional.ifPresentOrElse(account -> {
