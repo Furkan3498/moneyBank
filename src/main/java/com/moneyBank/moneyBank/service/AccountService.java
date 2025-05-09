@@ -128,7 +128,35 @@ public class AccountService {
         rabbitTemplate.convertAndSend(exchange.getName(), routingKey, moneyTransferRequest);
         }
 
-        @RabbitListener(queues = "${sample.rabbitmq.queue}")
+
+    @RabbitListener(queues = "${sample.rabbitmq.queue}")
+    public void transferMoneyMessage(MoneyTransferRequest moneyTransferRequest) {
+        Optional<Account> fromAccountOpt = accountRepository.findById(moneyTransferRequest.getFromId());
+        Optional<Account> toAccountOpt = accountRepository.findById(moneyTransferRequest.getToId());
+
+        if (fromAccountOpt.isPresent() && toAccountOpt.isPresent()) {
+            Account fromAccount = fromAccountOpt.get();
+            Account toAccount = toAccountOpt.get();
+
+
+            if (!fromAccount.getCurrency().equals(toAccount.getCurrency())) {
+                System.out.println("Transfers between different currencies are not possible.");
+                return;
+            }
+
+            if (fromAccount.getBalance() > moneyTransferRequest.getAmount()) {
+                fromAccount.setBalance(fromAccount.getBalance() - moneyTransferRequest.getAmount());
+                accountRepository.save(fromAccount);
+                rabbitTemplate.convertAndSend(exchange.getName(), "secondStepQueue", moneyTransferRequest);
+            } else {
+                System.out.println("Insufficient funds -> accountId: " + fromAccount.getId()+ " balance: " + fromAccount.getBalance() + " amount: " + moneyTransferRequest.getAmount());
+            }
+        } else {
+            System.out.println("Account not found");
+        }
+    }
+
+    /* @RabbitListener(queues = "${sample.rabbitmq.queue}")
     public void transferMoneyMessage(MoneyTransferRequest moneyTransferRequest) {
         Optional<Account> accountOptional = accountRepository.findById(moneyTransferRequest.getFromId());
         accountOptional.ifPresentOrElse(account -> {
@@ -141,7 +169,7 @@ public class AccountService {
                     }},
                 () -> System.out.println("Account not found")
         );
-    }
+    }*/
     @RabbitListener(queues = "secondStepQueue")
     public void updateReceiverAccount(MoneyTransferRequest transferRequest) {
         Optional<Account> accountOptional = accountRepository.findById(transferRequest.getToId());
