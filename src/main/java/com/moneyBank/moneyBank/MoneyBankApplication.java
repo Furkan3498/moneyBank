@@ -60,14 +60,21 @@ public class MoneyBankApplication implements CommandLineRunner {
 				.dateOfBirth(1995)
 				.city(City.IGDIR)
 				.build();
+		Customer c5 = Customer.builder()
+				.id("7777")
+				.address("istanbul")
+				.name("furkish")
+				.dateOfBirth(1995)
+				.city(City.IGDIR)
+				.build();
 
-		customerRepository.saveAll(Arrays.asList(c1,c2,c3,c4));
+		customerRepository.saveAll(Arrays.asList(c1,c2,c3,c4,c5));
 
 		Account a1 = Account.builder()
 				.id("100")
 				.customerId("1234")
 				.city(City.EDIRNE)
-				.balance(1500.0)
+				.balance(15000.0)
 				.currency(Currency.TRY)
 				.build();
 		Account a2 = Account.builder()
@@ -91,7 +98,14 @@ public class MoneyBankApplication implements CommandLineRunner {
 				.city(City.KOCAELI)
 				.balance(10000.0)
 				.build();
+		Account a5 = Account.builder()
+				.id("104")
+				.customerId("7777")
+				.currency(Currency.TRY)
+				.city(City.KOCAELI)
+				.balance(10000.0)
+				.build();
 
-		accountRepository.saveAll(Arrays.asList(a1,a2,a3,a4));
+		accountRepository.saveAll(Arrays.asList(a1,a2,a3,a4,a5));
 	}
 }
