@@ -148,7 +148,7 @@ public class AccountService {
         accountOptional.ifPresentOrElse(account -> {
                     account.setBalance(account.getBalance() + transferRequest.getAmount());
                     accountRepository.save(account);
-                    rabbitTemplate.convertAndSend(exchange.getName(), "thirdRoute", transferRequest);
+                    rabbitTemplate.convertAndSend(exchange.getName(), "thirdStepQueue", transferRequest);
                 },
                 () -> {
                     System.out.println("Receiver Account not found");
