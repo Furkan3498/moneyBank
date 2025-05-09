@@ -135,7 +135,7 @@ public class AccountService {
                     if (account.getBalance() > moneyTransferRequest.getAmount()) {
                         account.setBalance(account.getBalance() - moneyTransferRequest.getAmount());
                         accountRepository.save(account);
-                        rabbitTemplate.convertAndSend(exchange.getName(), "secondRoute", moneyTransferRequest);
+                        rabbitTemplate.convertAndSend(exchange.getName(), "secondStepQueue", moneyTransferRequest);
                     } else {
                         System.out.println("Insufficient funds -> accountId: " + moneyTransferRequest.getFromId() + " balance: " + account.getBalance() + " amount: " + moneyTransferRequest.getAmount());
                     }},
