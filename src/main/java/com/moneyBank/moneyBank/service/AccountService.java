@@ -162,7 +162,7 @@ public class AccountService {
                 }
         );
     }
-
+    @RabbitListener(queues = "thirdStepQueue")
     public void finalizeTransfer(MoneyTransferRequest transferRequest) {
         Optional<Account> accountOptional = accountRepository.findById(transferRequest.getFromId());
         accountOptional.ifPresentOrElse(account ->
