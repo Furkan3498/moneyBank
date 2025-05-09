@@ -180,8 +180,7 @@ public class AccountService {
             System.out.println("Receiver(" + account.getId() +") new account balance: " + account.getBalance());
 
 
-        },
-                () -> System.out.println("Account not found")
+        },   () -> System.out.println("Account not found")
         );
 
 

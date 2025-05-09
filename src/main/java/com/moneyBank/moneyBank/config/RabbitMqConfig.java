@@ -77,19 +77,6 @@ public class RabbitMqConfig {
         return rabbitTemplate;
     }
 
-    @Bean
-    public SimpleMessageListenerContainer container(ConnectionFactory connectionFactory,
-                                                    MessageListenerAdapter listenerAdapter) {
-        SimpleMessageListenerContainer container = new SimpleMessageListenerContainer();
-        container.setConnectionFactory(connectionFactory);
-        container.setQueueNames(queueName);
-        container.setMessageListener(listenerAdapter);
-        return container;
-    }
 
-    @Bean
-    public MessageListenerAdapter listenerAdapter(MessageReceiver receiver) {
-        return new MessageListenerAdapter(receiver, "receiveMessage");
-    }
 
 }
