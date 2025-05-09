@@ -27,17 +27,17 @@ public class RabbitMqConfig {
 
     @Bean
     public Queue queue() {
-        return new Queue(queueName, false);
+        return new Queue(queueName, true);
     }
 
     //durable: This is the feature of whether your message can be deleted or not.
     @Bean
     public Queue secondStepQueue() {
-        return new Queue("secondStepQueue", false);
+        return new Queue("secondStepQueue", true);
     }
     @Bean
     public Queue thirdStepQueue() {
-        return new Queue("thirdStepQueue", false);
+        return new Queue("thirdStepQueue", true);
     }
 
 
