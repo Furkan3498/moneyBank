@@ -170,7 +170,7 @@ public class AccountService {
                     String notificationMessage = "Dear customer %s \n Your money transfer request has been succeed. Your new balance is %s";
                     System.out.println("Sender(" + account.getId() +") new account balance: " + account.getBalance());
                     String senderMessage = String.format(notificationMessage, account.getId(), account.getBalance());
-                    kafkaTemplate.send("transfer-notification",  senderMessage);
+
                 }, () -> System.out.println("Account not found")
         );
 
@@ -180,7 +180,7 @@ public class AccountService {
             String notificationMessage = "Dear customer %s \n You received a money transfer from %s. Your new balance is %s";
             System.out.println("Receiver(" + account.getId() +") new account balance: " + account.getBalance());
             String receiverMessage = String.format(notificationMessage, account.getId(), transferRequest.getFromId(), account.getBalance());
-            kafkaTemplate.send("transfer-notification",  receiverMessage);
+
         },
                 () -> System.out.println("Account not found")
         );
