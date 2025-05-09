@@ -162,6 +162,18 @@ public class AccountService {
                 }
         );
     }
+
+    public void finalizeTransfer(MoneyTransferRequest transferRequest) {
+        Optional<Account> accountOptional = accountRepository.findById(transferRequest.getFromId());
+        accountOptional.ifPresentOrElse(account ->
+                {
+                    String notificationMessage = "Dear customer %s \n Your money transfer request has been succeed. Your new balance is %s";
+                    System.out.println("Sender(" + account.getId() +") new account balance: " + account.getBalance());
+                    String senderMessage = String.format(notificationMessage, account.getId(), account.getBalance());
+                    kafkaTemplate.send("transfer-notification",  senderMessage);
+                }, () -> System.out.println("Account not found")
+        );
+
 }
 
 
