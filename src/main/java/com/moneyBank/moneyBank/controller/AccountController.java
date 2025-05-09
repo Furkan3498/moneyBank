@@ -1,6 +1,7 @@
 package com.moneyBank.moneyBank.controller;
 
 import com.moneyBank.moneyBank.requestDtos.CreateAccountRequest;
+import com.moneyBank.moneyBank.requestDtos.MoneyTransferRequest;
 import com.moneyBank.moneyBank.requestDtos.UpdateAccountRequest;
 import com.moneyBank.moneyBank.dto.AccountDto;
 import com.moneyBank.moneyBank.service.AccountService;
@@ -52,6 +53,13 @@ public class AccountController {
         return ResponseEntity.ok(accountService.addMoney(id,amount));
     }
 
+    @PutMapping("/transfer")
+    public ResponseEntity<String> transferMoney(@RequestBody MoneyTransferRequest moneyTransferRequest){
+
+        accountService.transferMoney(moneyTransferRequest) ;
+        return ResponseEntity.ok("İşleminiz başarıyla tamamlandı");
+
+    }
 
 }
 
