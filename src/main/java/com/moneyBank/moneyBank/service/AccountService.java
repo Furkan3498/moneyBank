@@ -179,6 +179,15 @@ public class AccountService {
         {
             String notificationMessage = "Dear customer %s \n You received a money transfer from %s. Your new balance is %s";
             System.out.println("Receiver(" + account.getId() +") new account balance: " + account.getBalance());
+            String receiverMessage = String.format(notificationMessage, account.getId(), transferRequest.getFromId(), account.getBalance());
+            kafkaTemplate.send("transfer-notification",  receiverMessage);
+        },
+                () -> System.out.println("Account not found")
+        );
+
+
+    }
+
 
 }
 
